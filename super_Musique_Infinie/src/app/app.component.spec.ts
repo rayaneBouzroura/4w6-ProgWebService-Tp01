@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'super_Musique_Infinie'`, () => {
+  it(`should have as title 'super_musique_infinie'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('super_Musique_Infinie');
+    expect(app.title).toEqual('super_musique_infinie');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('super_Musique_Infinie app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('super_musique_infinie app is running!');
   });
 });
