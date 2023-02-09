@@ -1,2 +1,5 @@
 <h1>test</h1>
-<Button type="button" (click)="searchAlbum()">bouton search pour debug</Button>
+<form (ngSubmit)="searchTopAlbum(artist)">
+    <input type="text" name="artistName" [(ngModel)]="artist" class="form-control" placeholder="Nom d'un artiste">
+    <input type="submit" value="Rechercher les top album de l'artiste" class="btn btn-light">
+  </form>

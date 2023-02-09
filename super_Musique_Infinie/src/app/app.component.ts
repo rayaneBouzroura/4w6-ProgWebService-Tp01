@@ -23,15 +23,16 @@ export class AppComponent   {
 
   async searchArtist(): Promise<void>{
     let nomArtiste = "2pac";
-    console.log("je suis ici");
+    console.log("btn chercher artist pressed");
     //let x = await lastValueFrom(this.http.get<any>("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+nomArtiste+"r&api_key="+this.apiKey));
     let x = await lastValueFrom(this.http.get<any>("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=2pac&api_key=9a8a3facebbccaf363bb9fd68fa37abf&format=json"));
     let bol : boolean = false;
   }
-  async searchAlbum(): Promise<void>{
-    let nomArtiste = "2pac";
-    let constructeurDeRequete = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" +nomArtiste+"&api_key=9a8a3facebbccaf363bb9fd68fa37abf&format=json";
-    let x = await lastValueFrom(this.http.get<any>("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="   +nomArtiste+"&api_key=9a8a3facebbccaf363bb9fd68fa37abf&format=json"));   
+  async searchTopAlbum(nomArtist : String): Promise<void>{
+    let constructeurDeRequete = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+nomArtist+"&api_key="+this.apiKey+"&format=json";
+    let topAlbumsResponse = await lastValueFrom(this.http.get<any>(constructeurDeRequete));
+    //initialize an empty array
+  
   }
   newSearch():void{
     //vider la liste hehehehehehehe
@@ -46,7 +47,7 @@ export class AppComponent   {
 }
 //Classe Album
 class Album {
-  constructor(public titre: string, public artiste: string, public nbrEcoute : number , public) {}
+  constructor(public titre: string, public artiste: string, public nbrEcoute : number  ) {}
 }
 //Classe chanson
 class Chanson {
