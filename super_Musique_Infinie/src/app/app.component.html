@@ -16,18 +16,41 @@
         <input type="submit" value="chercher top album" class="btn btn-light">
       </form>
     </div>
-    <div *ngIf="monterAlbum">
-      <div  *ngFor="let album of Albums">
-        <div class="card col-2" (click)="montrerChanson(album)">
-          <!-- Si image null ont met un placeholder -->
-          <img [src]="album.imageUrl ? album.imageUrl : 'assets/placeholder.jpg'" class="card-img-top img-fluid" alt="Album Image">
-          <div class="card-body">
-            <h5 class="card-title">{{ album.titre != '(null)'  ? album.titre : 'impossible de recuperer le titre 😭'}}</h5>
-            <p class="card-text">Par: {{ album.artiste }}</p>
-            <p class="card-text">nombre d'ecoute: {{ album.nbrEcoute }}</p>
+    <!-- /////// block des cartes d'album ////////// -->
+      <div class="row">
+        <div  *ngFor="let album of Albums" class="col-xl-3 col-md-6 col-12">
+          <div class="card" (click)="toggleListeChanson(album)">
+            <!-- Si liste chanson non vide -->
+              <div *ngIf="album.montrerChanson">
+                <div *ngIf="album.chansons.length; else listeVide">
+                  <div class="scrollable">
+                    <ul>
+                      <li *ngFor="let song of album.chansons">
+                        {{ song.titre }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Si liste chanson non vide -->
+            <ng-template #listeVide>
+              <img src="assets/placeholderNoSongs.jpg" alt="Placeholder Image pas de chanson" class="card-img-top img-fluid img">
+            </ng-template>
+              </div>
+
+
+            <div *ngIf="!album.montrerChanson">
+              <!-- Si image null ont met un placeholder -->
+              <img [src]="album.imageUrl ? album.imageUrl : 'assets/placeholder.jpg'" class="card-img-top img-fluid img" alt="Album Image">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ album.titre != '(null)'  ? album.titre : 'impossible de recuperer le titre 😭'}}</h5>
+              <p class="card-text">Par: {{ album.artiste }}</p>
+              <p class="card-text">nombre d'ecoute: {{ album.nbrEcoute }}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+
   </div>
 </div>

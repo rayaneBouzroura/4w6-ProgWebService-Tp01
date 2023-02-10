@@ -1,10 +1,24 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('blurInOut', [
+      state('in', style({
+        filter: 'blur(0)'
+      })),
+      state('out', style({
+        filter: 'blur(5px)'
+      })),
+      transition('in => out', animate('400ms ease-in-out')),
+      transition('out => in', animate('400ms ease-in-out'))
+    ])
+  ]
 })
 export class AppComponent   {
   //initialisation des variables
@@ -32,7 +46,7 @@ export class AppComponent   {
         //recuperer l'adress de l'image si elle existe
         const imageUrl = image ? image["#text"] : '';
         //creation de l'objet album
-        let albumCourant : Album = new Album(album.name, album.artist.name, album.playcount, imageUrl , []);
+        let albumCourant : Album = new Album(album.name, album.artist.name, album.playcount, imageUrl , [],false);
         //remplir l'album de chanson
         this.remplirChanson(albumCourant);
         this.Albums.push(albumCourant);
@@ -40,7 +54,7 @@ export class AppComponent   {
       }
       this.monterAlbum = true;
     ;
-    console.log(await lastValueFrom(this.http.get<any>("http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=9a8a3facebbccaf363bb9fd68fa37abf&artist=Cher&album=Believe&format=json")));
+    //console.log(await lastValueFrom(this.http.get<any>("http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=9a8a3facebbccaf363bb9fd68fa37abf&artist=Cher&album=Believe&format=json")));
 
   }
   //method qui recupere le nom
@@ -56,7 +70,7 @@ export class AppComponent   {
       if (objChansonCourante != undefined){
         let chanson = new Chanson(objChansonCourante.name, objChansonCourante.duration);
         monAlbum.chansons.push(chanson);
-        console.log("chansons "+ chanson.titre + " ajoute a l'album");
+        //console.log("chansons "+ chanson.titre + " ajoute a l'album");
       }
 
   }
@@ -66,10 +80,9 @@ export class AppComponent   {
 
 
 }
-montrerChanson(displayedAlbum : Album){
-  for(const chanson  of displayedAlbum.chansons){
-    alert(chanson.titre);
-  }
+toggleListeChanson(displayedAlbum : Album){
+  console.log("montrerChanson called");
+  displayedAlbum.montrerChanson = !displayedAlbum.montrerChanson;
 }
 }
 //////////CLASSES
@@ -79,7 +92,8 @@ class Album {
               public artiste: string,
               public nbrEcoute : number ,
               public imageUrl :string ,
-              public chansons : (Chanson[])) {}
+              public chansons : (Chanson[]),
+              public montrerChanson : boolean) {}
 }
 //Classe chanson
 class Chanson {
