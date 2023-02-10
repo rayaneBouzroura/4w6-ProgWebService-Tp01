@@ -72,6 +72,11 @@ export class AppComponent   {
         monAlbum.chansons.push(chanson);
         //console.log("chansons "+ chanson.titre + " ajoute a l'album");
       }
+      else{
+        console.log("problem avec : une chanson :");
+        console.log(chansons);
+        
+      }
 
   }
 

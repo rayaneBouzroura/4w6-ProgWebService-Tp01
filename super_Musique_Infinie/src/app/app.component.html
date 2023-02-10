@@ -8,12 +8,13 @@
     </div>
   </div>
   <div  class="row mt-5 justify-content-center">
-    <div *ngIf="!monterAlbum" class="col">
+    <div *ngIf="!monterAlbum" class="col text-center">
       <form  (ngSubmit)="searchTopAlbum(artist)">
         <div class="form-group">
-          <input type="text" name="artistName" [(ngModel)]="artist" class="form-control" placeholder="Enter Artist Name">
+          <input type="text" name="artistName" [(ngModel)]="artist" class="form-control" placeholder="nom de l'artiste">
+          <input type="submit" value="chercher top album" class="btn btn-light mr-2">
         </div>
-        <input type="submit" value="chercher top album" class="btn btn-light">
+        
       </form>
     </div>
     <!-- /////// block des cartes d'album ////////// -->
