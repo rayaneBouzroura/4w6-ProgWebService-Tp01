@@ -1,5 +1,33 @@
-<h1>test</h1>
-<form (ngSubmit)="searchTopAlbum(artist)">
-    <input type="text" name="artistName" [(ngModel)]="artist" class="form-control" placeholder="Nom d'un artiste">
-    <input type="submit" value="Rechercher les top album de l'artiste" class="btn btn-light">
-  </form>
+<div class="container mt-5">
+  <h1>Top Albums</h1>
+
+  <div class="row mt-5">
+    <div class="col-12 text-center" *ngIf="monterAlbum">
+      <h2>Albums de l'artiste {{ artist }}</h2>
+      <button (click)="viderAlbum()" class="btn btn-light">Nouvelle recherche</button>
+    </div>
+  </div>
+  <div  class="row mt-5 justify-content-center">
+    <div *ngIf="!monterAlbum" class="col">
+      <form  (ngSubmit)="searchTopAlbum(artist)">
+        <div class="form-group">
+          <input type="text" name="artistName" [(ngModel)]="artist" class="form-control" placeholder="Enter Artist Name">
+        </div>
+        <input type="submit" value="chercher top album" class="btn btn-light">
+      </form>
+    </div>
+    <div *ngIf="monterAlbum">
+      <div  *ngFor="let album of Albums">
+        <div class="card col-2" (click)="montrerChanson(album)">
+          <!-- Si image null ont met un placeholder -->
+          <img [src]="album.imageUrl ? album.imageUrl : 'assets/placeholder.jpg'" class="card-img-top img-fluid" alt="Album Image">
+          <div class="card-body">
+            <h5 class="card-title">{{ album.titre != '(null)'  ? album.titre : 'impossible de recuperer le titre 😭'}}</h5>
+            <p class="card-text">Par: {{ album.artiste }}</p>
+            <p class="card-text">nombre d'ecoute: {{ album.nbrEcoute }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
